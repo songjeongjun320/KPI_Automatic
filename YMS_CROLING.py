@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 import datetime
-from datetime import date, timedelta
+from datetime import timedelta
 import time
 
 id = 'jun.s'
@@ -14,9 +14,9 @@ pw = 'jun5090'
 
 today = datetime.date.today()
 if today.weekday() == 0:
-    target_date = today - timedelta(days=3)
+    target_date = today - timedelta(days=3) # Monday should choose Friday
 else:
-    target_date = today - timedelta(days=1)
+    target_date = today - timedelta(days=1) # Choose yesterday
     
 browser = webdriver.Chrome()
 browser.maximize_window() # 창 최대화
