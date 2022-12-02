@@ -1,6 +1,8 @@
 from csv import unregister_dialect
 from re import search
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -8,6 +10,13 @@ from selenium.webdriver.common.by import By
 import datetime
 from datetime import timedelta
 import time
+
+# Chrome webdriver automatic update
+from webdriver_manager.chrome import ChromeDriverManager
+
+service = Service(executable_path=ChromeDriverManager().install())
+browser = webdriver.Chrome(service=service)
+browser.maximize_window() # 창 최대화
 
 id = 'jun.s'
 pw = 'jun5090'
@@ -17,9 +26,6 @@ if today.weekday() == 0:
     target_date = today - timedelta(days=3) # Monday should choose Friday
 else:
     target_date = today - timedelta(days=1) # Choose yesterday
-    
-browser = webdriver.Chrome()
-browser.maximize_window() # 창 최대화
 
 def from_YMS():
     ########## YMS ################ EXTRACT #######################################
@@ -84,8 +90,9 @@ def from_YMS():
 ################################################################################
 ################## Data extract from TMS #######################################
 def from_TMS():
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(service=service)
     browser.maximize_window() # 창 최대화
+
     # 1. Open TMS browser
     url = 'http://nglphx.logisticsmax.com/default.asp'
     browser.get(url)
@@ -203,6 +210,6 @@ Kpi_TMS = from_TMS()
 # Kpi_OTTR = from_OTTR()
 
 print("\n#################################################")
-print("Chassis Flip % : {0}".format(Kpi_YMS))
 print("Export % : {0}".format(Kpi_TMS))
+print("Chassis Flip % : {0}".format(Kpi_YMS))
 print("#################################################\n")
