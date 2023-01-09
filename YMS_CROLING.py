@@ -14,8 +14,10 @@ import time
 # Chrome webdriver automatic update
 from webdriver_manager.chrome import ChromeDriverManager
 
+options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
 service = Service(executable_path=ChromeDriverManager().install())
-browser = webdriver.Chrome(service=service)
+browser = webdriver.Chrome(service=service, options=options)
 browser.maximize_window() # 창 최대화
 
 id = 'jun.s'
@@ -23,7 +25,7 @@ pw = 'jun5090'
 
 today = datetime.date.today()
 if today.weekday() == 0:
-    target_date = today - timedelta(days=3) # Monday should choose Friday
+    target_date = today - timedelta(days=4) # Monday should choose Friday
 else:
     target_date = today - timedelta(days=1) # Choose yesterday
 
@@ -83,9 +85,9 @@ def from_YMS():
             purpose_count += 1
         total_count+=1
 
-    Kpi_Yms = round(purpose_count/(total_count-1)*100,2)
-    
-    return Kpi_Yms
+    result = round(purpose_count/(total_count-1)*100,2)
+    print(result)
+    return result
 
 ################################################################################
 ################## Data extract from TMS #######################################
@@ -147,8 +149,10 @@ def from_TMS():
     search_button = browser.find_element(By.XPATH, '/html/body/form/table/tbody/tr[1]/td/fieldset/table/tbody/tr/td[1]/b/img[2]') # Click the search
     search_button.click()
 
-    time.sleep(100)
-    
+    print("Sleep Start")
+    time.sleep(50)
+    print("Sleep End")
+
     # 5. Data Extracting
     ##############Frame switch####### IMPORTATNT#############
     iframe = browser.find_element(By.NAME, 'iframe4sub')
@@ -159,9 +163,9 @@ def from_TMS():
     df = pd.read_html(browser.page_source)[3]
     
     ################## Result ###############################
-    Kpi_TMS = round(int(df.iloc[78][target_date.weekday()+2])/int(df.iloc[77][target_date.weekday()+2]) * 100, 2)
-
-    return Kpi_TMS
+    result = round(int(df.iloc[78][target_date.weekday()+2])/int(df.iloc[77][target_date.weekday()+2]) * 100, 2)
+    print(result)
+    return result
 
 ############################ Data Extract from OTTR #################################
 def from_OTTR():
