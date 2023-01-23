@@ -25,7 +25,7 @@ pw = 'jun5090'
 
 today = datetime.date.today()
 if today.weekday() == 0:
-    target_date = today - timedelta(days=4) # Monday should choose Friday
+    target_date = today - timedelta(days=3) # Monday should choose Friday
 else:
     target_date = today - timedelta(days=1) # Choose yesterday
 
@@ -150,7 +150,7 @@ def from_TMS():
     search_button.click()
 
     print("Sleep Start")
-    time.sleep(50)
+    time.sleep(100)
     print("Sleep End")
 
     # 5. Data Extracting
@@ -217,3 +217,6 @@ print("\n#################################################")
 print("Export % : {0}".format(Kpi_TMS))
 print("Chassis Flip % : {0}".format(Kpi_YMS))
 print("#################################################\n")
+
+while True:
+    pass
