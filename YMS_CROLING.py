@@ -20,8 +20,8 @@ service = Service(executable_path=ChromeDriverManager().install())
 browser = webdriver.Chrome(service=service, options=options)
 browser.maximize_window() # 창 최대화
 
-id = 'jun.s'
-pw = 'jun5090'
+# id = 
+# pw = 
 
 today = datetime.date.today()
 if today.weekday() == 0:
