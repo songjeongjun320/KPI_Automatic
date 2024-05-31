@@ -173,8 +173,8 @@ def from_OTTR():
     browser.get(url) # 페이지 이동
 
     # 1. User ID
-    google_id = 'jun.s@ngltrans.net'
-    google_password = 'rhkgkrwk320!'
+    # google_id = 
+    # google_password = 
     
     userid = browser.find_element(By.NAME,'identifier')
     userid.send_keys(google_id)
